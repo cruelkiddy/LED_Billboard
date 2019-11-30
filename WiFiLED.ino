@@ -3,17 +3,22 @@
 #include <LedMatrix.h>
 #define NUMBER_OF_DEVICES 6
 #define CS_PIN 16
-LedMatrix ledMatrix = LedMatrix(NUMBER_OF_DEVICES, CS_PIN);
+    LedMatrix ledMatrix = LedMatrix(NUMBER_OF_DEVICES, CS_PIN);
 #include <cp437font.h>
 #include <SPI.h>
 #include "login.h"
 #include "Ref.h"
 
-const char* ssid     = "";
-const char* password = "";
+String ipToString(IPAddress ip){
+  String s="";
+  for (int i=0; i<4; i++)
+    s += i  ? "." + String(ip[i]) : String(ip[i]);
+  return s;
+}
 
-
-
+const char* ssid     = "lvdou";
+const char* password = "987654321";
+String IP;
 
 WiFiServer server(80);
 
@@ -34,7 +39,7 @@ void setup() {
   ledMatrix.init();
   ledMatrix.setIntensity(2);
   ledMatrix.setCharWidth(8);
-  ledMatrix.setText(DisplayText);
+  ledMatrix.setText(ipToString(WiFi.localIP()));
 }
 
 void loop(){
