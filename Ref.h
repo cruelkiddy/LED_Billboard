@@ -17,7 +17,7 @@ int Intensity = 2;
 
 void Control_Send(String& rawString){
  
-    int i = 0;int flag = 0;long num_value;int value_get = 0;int v = 0;
+    int i = 0;int flag = 0;long num_value;int value_get = 0;int v = 0; int j = 0;
     
     String value[2]; value[0] = ""; value[1] = "";
     String rawText = "";
@@ -49,15 +49,20 @@ void Control_Send(String& rawString){
             i = 0;
             for( ; i < value[1].length(); i++){
                 if(value[1].charAt(i) == '%'){
-                    textBuffer[0] =  value[1].charAt(i+1);
-                    textBuffer[1] =  value[1].charAt(i+2);
-                    textBuffer[2] =  0;
-                    sscanf(textBuffer, "%x", &v);
-                    rawText += char(v);
+                      textBuffer[0] =  value[1].charAt(i+1);
+                      textBuffer[1] =  value[1].charAt(i+2);
+                      textBuffer[2] =  0;
+                      sscanf(textBuffer, "%x", &v);
+                      rawText += char(v);
+                      i += 2;
+                }
+                else{
+                     rawText += value[1].charAt(i);
                 }
             }
+            DisplayText = rawText;
         }
-        DisplayText = rawText;
+        else{DisplayText = value[1];}
         ledMatrix.setText(DisplayText);
         rawText = "";
         Serial.println("Text changed");
