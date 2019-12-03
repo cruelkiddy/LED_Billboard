@@ -1,14 +1,24 @@
-
 #include <ESP8266WiFi.h>
 #include <LedMatrix.h>
 #define NUMBER_OF_DEVICES 6
 #define CS_PIN 16
+///< Initialize LedMatrix Instance here, because Intensity & Text are changed in "Ref.h"   (Not a good habit doing this
     LedMatrix ledMatrix = LedMatrix(NUMBER_OF_DEVICES, CS_PIN);
 #include <cp437font.h>
 #include <SPI.h>
 #include "login.h"
 #include "Ref.h"
 
+///< Access Point's Login info, ssid is Dongxu by default, 
+///< showing gratefulness to the author of this project
+const char* ssid     = "Dongxu";
+const char* password = "thankyoudd";
+String IP;
+
+///< Initialize WiFiServer instance
+WiFiServer server(80);
+
+///< Convert ip to String, for displaying 8266's IP address on the LED board 
 String ipToString(IPAddress ip){
   String s="";
   for (int i=0; i<4; i++)
@@ -16,11 +26,7 @@ String ipToString(IPAddress ip){
   return s;
 }
 
-const char* ssid     = "lvdou";
-const char* password = "987654321";
-String IP;
 
-WiFiServer server(80);
 
 void setup() {
   Serial.begin(115200);
@@ -55,7 +61,7 @@ void loop(){
             }
         }
      }
-     // Serial.println(Mode);
+     ///< 
      if(Mode){
          //
          ledMatrix.clear();
@@ -66,13 +72,12 @@ void loop(){
          delay(50);
      }
      else{
-        //ledMatrix.setIntensity(Intensity);
+        
         ledMatrix.clear();
-        ledMatrix.commit();
-        delay(50);
-
-        ledMatrix.scrollTextLeft();
-
+        
+        ledMatrix.setText(DisplayText);
+        ledMatrix.setTextAlignment(TEXT_ALIGN_LEFT_END);
+        
         ledMatrix.drawText();
         ledMatrix.commit(); 
         delay(50);      

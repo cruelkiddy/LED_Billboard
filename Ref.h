@@ -5,11 +5,12 @@
  *  
  *  @brief : modified to control LED State, refine code style and add comment
  *
- *
+ *  @brief : Coming to add comments
+ *  @date : 12/3/2019
  */
 
 #define Scroll 1
-#define Blink 0
+#define Static 0
 
 String DisplayText = "AINB///";
 int Mode = Scroll;
@@ -34,8 +35,8 @@ void Control_Send(String& rawString){
     Serial.println(value[1]);
     Serial.println(value[1].charAt(1));
     if(value[0].charAt(1) == 'W') {
-        if(value[1].charAt(0) == 't')  {Mode = 1;}
-        if(value[1].charAt(0) == 'f')  {Mode = 0;}
+        if(value[1].charAt(0) == 't')  {Mode = Scroll;}
+        if(value[1].charAt(0) == 'f')  {Mode = Static;}
     }
     else if(value[0].charAt(1) == 'F'){
         num_value = value[1].toInt();

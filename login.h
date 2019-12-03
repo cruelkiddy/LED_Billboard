@@ -22,7 +22,7 @@
     
     <h3>Mode:</h3>
     <div class="well" style="display:flex;flex-direction:column;">
-        <div class="switch" data-on-label="Scroll" data-off-label="Blink" style="align-self:center;" id="mySwitch">
+        <div class="switch" data-on-label="Scroll" data-off-label="Static" style="align-self:center;" id="mySwitch">
             <input type="checkbox" checked/>
         </div>
     </div>
